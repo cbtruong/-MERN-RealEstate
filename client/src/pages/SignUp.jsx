@@ -35,7 +35,6 @@ const SignUp = () => {
 			}
 			setLoading(false);
 			setError(null);
-			setFormData({});
 			navigate("/sign-in");
 			console.log(data);
 		}
