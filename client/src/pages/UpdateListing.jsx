@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
-const CreateListing = () => {
+
+const UpdateListing = () => {
 	const { currentUser } = useSelector((state) => state.user);
 	const navigate = useNavigate();
+    const params = useParams();
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
@@ -25,6 +27,21 @@ const CreateListing = () => {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
+
+    useEffect(() => {
+    const fetchListing = async () => {
+      const listingId = params.listingId;
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+    };
+
+        fetchListing();
+    }, []);
 	const handleChange = (e) => {
 		if (e.target.id === "sale" || e.target.id === "rent") {
 			setFormData({
@@ -65,16 +82,16 @@ const CreateListing = () => {
 		try {
 			setError(false);
 			setLoading(true);
-			const res = await fetch("/api/listing/create", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					...formData,
-					userRef: currentUser._id,
-				}),
-			});
+            const res = await fetch(`/api/listing/update/${params.listingId}`, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                ...formData,
+                userRef: currentUser._id,
+                }),
+            });
 			const data = await res.json();
 			setLoading(false);
 			if (data.success === false) {
@@ -90,7 +107,7 @@ const CreateListing = () => {
 	return (
 		<main className="p-3 max-w-4xl mx-auto">
 			<h1 className="text-3xl font-semibold text-center my-7">
-				Create a Listing
+				Update a Listing
 			</h1>
 			<form
 				onSubmit={handleSubmit}
@@ -275,7 +292,7 @@ const CreateListing = () => {
 						className="p-3 bg-slate-700 text-white rounded-lg 
                 uppercase hover:opacity-95 disabled:opacity-80"
 					>
-						{loading ? "Creating..." : "Create listing"}
+						{loading ? "Creating..." : "Update listing"}
 					</button>
 					{error && <p className="text-red-700 text-sm">{error}</p>}
 				</div>
@@ -284,4 +301,4 @@ const CreateListing = () => {
 	);
 };
 
-export default CreateListing;
+export default UpdateListing;
