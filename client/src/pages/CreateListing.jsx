@@ -18,7 +18,10 @@ const CreateListing = () => {
 		offer: false,
 		parking: false,
 		furnished: false,
-		imageUrls: ["dhfe", "efhoehf"],
+		imageUrls: [
+			"https://tse3.mm.bing.net/th?id=OIP.qQaYM8SzEL3FCABDnxWtZgHaEh&pid=Api&P=0&h=180",
+			"https://tse1.mm.bing.net/th?id=OIP.AlPOGhL46M4ElIITwfrWVwHaE8&pid=Api&P=0&h=180",
+		],
 	});
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -221,26 +224,28 @@ const CreateListing = () => {
 								)}
 							</div>
 						</div>
-						{formData.offer &&
-						<div className="flex items-center gap-2">
-							<input
-								onChange={handleChange}
-								type="number"
-								id="discountPrice"
-								min={1}
-								max={10}
-								required
-								className="p-3 border border-gray-300 rounded-lg"
-								value={formData.discountPrice}
-							/>
-							<div className=" flex flex-col items-center">
-								<p>Discounted price</p>
-								{formData.type === "rent" && (
-									<span className="text-xs">($ / month)</span>
-								)}
+						{formData.offer && (
+							<div className="flex items-center gap-2">
+								<input
+									onChange={handleChange}
+									type="number"
+									id="discountPrice"
+									min={1}
+									max={10}
+									required
+									className="p-3 border border-gray-300 rounded-lg"
+									value={formData.discountPrice}
+								/>
+								<div className=" flex flex-col items-center">
+									<p>Discounted price</p>
+									{formData.type === "rent" && (
+										<span className="text-xs">
+											($ / month)
+										</span>
+									)}
+								</div>
 							</div>
-						</div>
-						}
+						)}
 					</div>
 				</div>
 				<div className="flex flex-col flex-1 gap-4">
