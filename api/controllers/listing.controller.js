@@ -14,11 +14,11 @@ const deleteListing = async (req, res, next) => {
   const listing = await Listing.findById(req.params.id);
 
   if (!listing) {
-    return next(errorHandler(404, 'Listing not found!'));
+    return next(errorHandler(404, 'Không có bất động sản phù hợp!'));
   }
 
   if (req.user.id !== listing.userRef) {
-    return next(errorHandler(401, 'You can only delete your own listings!'));
+    return next(errorHandler(401, 'Bạn chí có thể cập nhật bất động sản của bạn!'));
   }
 
   try {
@@ -32,10 +32,10 @@ const deleteListing = async (req, res, next) => {
 const updateListing = async (req, res, next) => {
   const listing = await Listing.findById(req.params.id);
   if (!listing) {
-    return next(errorHandler(404, 'Listing not found!'));
+    return next(errorHandler(404, 'Không có bất động sản phù hợp!'));
   }
   if (req.user.id !== listing.userRef) {
-    return next(errorHandler(401, 'You can only update your own listings!'));
+    return next(errorHandler(401, 'Bạn chí có thể cập nhật bất động sản của bạn!'));
   }
 
   try {
@@ -54,7 +54,7 @@ const getListing = async (req, res, next) => {
   try {
     const listing = await Listing.findById(req.params.id);
     if (!listing) {
-      return next(errorHandler(404, 'Listing not found!'));
+      return next(errorHandler(404, 'Không có bất động sản phù hợp!'));
     }
     res.status(200).json(listing);
   } catch (error) {
@@ -62,7 +62,7 @@ const getListing = async (req, res, next) => {
   }
 };
 
-export const getListings = async (req, res, next) => {
+const getListings = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -112,4 +112,4 @@ export const getListings = async (req, res, next) => {
     next(error);
   }
 };
-module.exports= {createListing,deleteListing,updateListing,getListing}
+module.exports= {createListing,deleteListing,updateListing,getListing,getListings}

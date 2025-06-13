@@ -112,25 +112,28 @@ export default function Profile() {
   };
 	console.log(formData);
 	return (
-		<div className="p-3 max-w-lg mx-auto">
-			<h1
-				className="text-3xl font-semibold text-center
-      my-7"
-			>
-				Profile
-			</h1>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-				<input type="file" ref={fileRef} hidden accept="image/*" />
-				<img
-					onClick={() => fileRef.current.click()}
-					src={currentUser.avatar}
-					alt="profile"
-					className=" rounded-full h-24 w-24 object-cover
-        cursor-pointer self-center mt-2"
-				/>
+		<div className="p-3 max-w-xl mx-auto">
+			<form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
+				<div 
+				style={{
+                  background: `url(https://tse2.mm.bing.net/th?id=OIP.HyPO0GQqnsGoMcauAHz_MQHaE7&pid=Api&P=0&h=180) center no-repeat`,
+                  backgroundSize: 'cover',
+                }}
+				className="h-60">
+				<div>
+					<input type="file" ref={fileRef} hidden accept="image/*" />
+					<img
+						onClick={() => fileRef.current.click()}
+						src={currentUser.avatar}
+						alt="profile"
+						className=" rounded-full h-24 w-24 object-cover
+						cursor-pointer self-center mt-2"
+						/>
+					</div>
+				</div>
 				<input
 					type="text"
-					placeholder="username"
+					placeholder="Tên người dùng"
 					defaultValue={currentUser.username}
 					id="username"
 					className="border p-3 rounded-lg"
@@ -146,24 +149,24 @@ export default function Profile() {
 				/>
 				<input
 					type="password"
-					placeholder="password"
+					placeholder="Mật khẩu"
 					id="password"
 					className="border p-3 rounded-lg"
 					onChange={handleChange}
 				/>
 				<button
 					disabled={loading}
-					className="bg-slate-700 text-white rounded-lg p-3
+					className="bg-red-400 text-white rounded-lg p-3
         uppercase hover:opacity-95 disabled:opacity-80"
 				>
 					{" "}
-					{loading ? "Loading..." : "Update"}
+					{loading ? "Loading..." : "Cập nhật"}
 				</button>
 				<Link
 					className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
 					to={"/create-listing"}
 				>
-					Create Listing
+					Tạo bất động sản
 				</Link>
 			</form>
 			<div className="flex justify-between mt-5">
@@ -171,13 +174,13 @@ export default function Profile() {
 					onClick={handleDeleteUser}
 					className="text-red-700 cursor-pointer"
 				>
-					Delete Account
+					Xóa tài khoản
 				</span>
 				<span
 					onClick={handleSignOut}
 					className="text-red-700 cursor-pointer"
 				>
-					Sign Out
+					Đăng xuất
 				</span>
 			</div>
 			<p className="text-red-700 mt-5">{error ? error : ""}</p>
@@ -185,7 +188,7 @@ export default function Profile() {
 				{updateSuccess ? "User is updated successfully!" : ""}
 			</p>
 			<button onClick={handleShowListings} className='text-green-700 w-full'>
-				Show Listings
+				Hiện thị danh sách bất động sản
 			</button>
 			<p className='text-red-700 mt-5'>
 				{showListingsError ? 'Error showing listings' : ''}
@@ -193,7 +196,7 @@ export default function Profile() {
 			{userListings && userListings.length > 0 && (
 				<div className='flex flex-col gap-4'>
 				<h1 className='text-center mt-7 text-2xl font-semibold'>
-					Your Listings
+					Bất động sản của tôi
 				</h1>
 				{userListings.map((listing) => (
 					<div
@@ -218,10 +221,10 @@ export default function Profile() {
 						<button 
 						onClick={() => handleListingDelete(listing._id)}
 						className='text-red-700 uppercase'>
-						Delete
+						Xóa
 						</button>
 						<Link to={`/update-listing/${listing._id}`}>
-						<button className='text-green-700 uppercase'>Edit</button>
+						<button className='text-green-700 uppercase'>Cập nhật</button>
 						</Link>
 					</div>
 					</div>

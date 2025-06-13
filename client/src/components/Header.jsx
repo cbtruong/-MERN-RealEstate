@@ -24,21 +24,20 @@ const Header = () => {
 		}
 	}, [location.search]);
 	return (
-		<header className="bg-slate-200 shadow-md">
-			<div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+		<header className="bg-red-400 shadow-md">
+			<div className="flex justify-between items-center max-w-6xl mx-auto p-4">
 				<Link to="/">
 					<h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-						<span className="text-slate-500">Sahand</span>
-						<span className="text-slate-700">Estate</span>
+						<span className="text-slate-500">ThinhPhat</span>
 					</h1>
 				</Link>
-				<form
+				{/* <form
 					onSubmit={handleSubmit}
 					className="bg-slate-100 p-3 rounded-lg flex items-center"
 				>
 					<input
 						type="text"
-						placeholder="Search..."
+						placeholder="Tìm kiếm bất động sản..."
 						className="bg-transparent focus:outline-none w-24 sm:w-64"
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
@@ -46,16 +45,21 @@ const Header = () => {
 					<button>
 						<FaSearch className="text-slate-600" />
 					</button>
-				</form>
+				</form> */}
 				<ul className="flex gap-4">
 					<Link to="/">
-						<li className="hidden sm:inline text-slate-700 hover:underline ">
-							Home
+						<li className="hidden sm:inline text-slate-200 hover:underline ">
+							Trang chủ
+						</li>
+					</Link>
+					<Link to="/search">
+						<li className="hidden sm:inline text-slate-200 hover:underline ">
+							Bất động sản
 						</li>
 					</Link>
 					<Link to="/about">
-						<li className="hidden sm:inline text-slate-700 hover:underline ">
-							About
+						<li className="hidden sm:inline text-slate-200 hover:underline ">
+							Về chúng tôi
 						</li>
 					</Link>
 					<Link to="/profile">
@@ -66,8 +70,8 @@ const Header = () => {
 								alt="profile"
 							/>
 						) : (
-							<li className=" text-slate-700 hover:underline ">
-								Sign in
+							<li className=" text-slate-200 hover:underline ">
+								Đăng nhập
 							</li>
 						)}
 					</Link>

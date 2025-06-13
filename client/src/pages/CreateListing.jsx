@@ -90,17 +90,49 @@ const CreateListing = () => {
 	return (
 		<main className="p-3 max-w-4xl mx-auto">
 			<h1 className="text-3xl font-semibold text-center my-7">
-				Create a Listing
+				Tạo bất động sản mới
 			</h1>
 			<form
 				onSubmit={handleSubmit}
 				className="flex flex-col sm:flex-row gap-4"
 			>
+				<div className="flex flex-col flex-1 gap-4">
+					<p className="font-semibold">
+						Hình ảnh:
+						<span className="font-normal text-gray-600 ml-2">
+							Chỉ tải lên tối đa 6 hình ảnh.
+						</span>
+					</p>
+					<div className=" flex gap-4">
+						<input
+							className="p-3 border border-gray-300 rounded w-[75%]"
+							type="file"
+							id="images"
+							accept="image/*"
+							multiple
+						/>
+						<button
+							type="button"
+							onClick={handleImageSubmit}
+							className="p-2 text-green-700 border border-green-700
+                        rounded uppercase hover:shadow-lg disabled:opacity-80"
+						>
+							Tải lên
+						</button>
+					</div>
+					<button
+						className="p-3 bg-slate-700 text-white rounded-lg 
+                uppercase hover:opacity-95 disabled:opacity-80"
+					>
+						{loading ? "Loading..." : "Tạo bất động sản"}
+					</button>
+					{error && <p className="text-red-700 text-sm">{error}</p>}
+				</div>
 				<div className="flex flex-col gap-4 flex-1">
 					<input
 						onChange={handleChange}
 						type="text"
-						placeholder="Name"
+						placeholder="Tên bất động sản"
 						className="border p-3 rounded-lg"
 						id="name"
 						maxLength="62"
@@ -111,7 +143,7 @@ const CreateListing = () => {
 					<textarea
 						onChange={handleChange}
 						type="text"
-						placeholder="Description"
+						placeholder="Mô tả"
 						className="border p-3 rounded-lg"
 						id="description"
 						required
@@ -120,7 +152,7 @@ const CreateListing = () => {
 					<input
 						onChange={handleChange}
 						type="text"
-						placeholder="Address"
+						placeholder="Địa chỉ/vị trí:"
 						className="border p-3 rounded-lg"
 						id="address"
 						required
@@ -128,6 +160,7 @@ const CreateListing = () => {
 					/>
 					<div className="flex gap-6 flex-wrap">
 						<div className="flex gap-2">
+							<span>Bán</span>
 							<input
 								onChange={handleChange}
 								checked={formData.type === "sale"}
@@ -135,9 +168,9 @@ const CreateListing = () => {
 								id="sale"
 								className="w-5"
 							/>
-							<span>Sell</span>
 						</div>
 						<div className="flex gap-2">
+							<span>Thuê</span>
 							<input
 								onChange={handleChange}
 								checked={formData.type === "rent"}
@@ -145,9 +178,9 @@ const CreateListing = () => {
 								id="rent"
 								className="w-5"
 							/>
-							<span>Rent</span>
 						</div>
 						<div className="flex gap-2">
+							<span>Bãi đậu xe</span>
 							<input
 								onChange={handleChange}
 								type="checkbox"
@@ -155,9 +188,9 @@ const CreateListing = () => {
 								className="w-5"
 								checked={formData.parking}
 							/>
-							<span>Parking spot</span>
 						</div>
 						<div className="flex gap-2">
+							<span>Nội thất</span>
 							<input
 								onChange={handleChange}
 								type="checkbox"
@@ -165,9 +198,9 @@ const CreateListing = () => {
 								className="w-5"
 								checked={formData.furnished}
 							/>
-							<span>Furnished</span>
 						</div>
 						<div className="flex gap-2">
+							<span>Đề nghị</span>
 							<input
 								onChange={handleChange}
 								type="checkbox"
@@ -175,11 +208,11 @@ const CreateListing = () => {
 								className="w-5"
 								checked={formData.offer}
 							/>
-							<span>Offer</span>
 						</div>
 					</div>
 					<div className=" flex flex-wrap gap-6">
 						<div className="flex items-center gap-2">
+							<p>Phòng ngủ</p>
 							<input
 								onChange={handleChange}
 								type="number"
@@ -190,9 +223,9 @@ const CreateListing = () => {
 								className="p-3 border border-gray-300 rounded-lg"
 								value={formData.bedrooms}
 							/>
-							<p>Beds</p>
 						</div>
 						<div className="flex items-center gap-2">
+							<p>Phòng về sinh</p>
 							<input
 								onChange={handleChange}
 								type="number"
@@ -203,7 +236,6 @@ const CreateListing = () => {
 								className="p-3 border border-gray-300 rounded-lg"
 								value={formData.bathrooms}
 							/>
-							<p>Baths</p>
 						</div>
 						<div className="flex items-center gap-2">
 							<input
@@ -217,9 +249,9 @@ const CreateListing = () => {
 								value={formData.regularPrice}
 							/>
 							<div className=" flex flex-col items-center">
-								<p>Regular price</p>
+								<p>Gía niêm yết:</p>
 								{formData.type === "rent" && (
-									<span className="text-xs">($ / month)</span>
+									<span className="text-xs">(đ / month)</span>
 								)}
 							</div>
 						</div>
@@ -236,10 +268,10 @@ const CreateListing = () => {
 									value={formData.discountPrice}
 								/>
 								<div className=" flex flex-col items-center">
-									<p>Discounted price</p>
+									<p>Giảm giá:</p>
 									{formData.type === "rent" && (
 										<span className="text-xs">
-											($ / month)
+											(đ / month)
 										</span>
 									)}
 								</div>
@@ -247,38 +279,7 @@ const CreateListing = () => {
 						)}
 					</div>
 				</div>
-				<div className="flex flex-col flex-1 gap-4">
-					<p className="font-semibold">
-						Image:
-						<span className="font-normal text-gray-600 ml-2">
-							The first image will be the cover(max 6)
-						</span>
-					</p>
-					<div className=" flex gap-4">
-						<input
-							className="p-3 border border-gray-300 rounded w-full"
-							type="file"
-							id="images"
-							accept="image/*"
-							multiple
-						/>
-						<button
-							type="button"
-							onClick={handleImageSubmit}
-							className="p-3 text-green-700 border border-green-700
-                        rounded uppercase hover:shadow-lg disabled:opacity-80"
-						>
-							Upload
-						</button>
-					</div>
-					<button
-						className="p-3 bg-slate-700 text-white rounded-lg 
-                uppercase hover:opacity-95 disabled:opacity-80"
-					>
-						{loading ? "Creating..." : "Create listing"}
-					</button>
-					{error && <p className="text-red-700 text-sm">{error}</p>}
-				</div>
+				
 			</form>
 		</main>
 	);

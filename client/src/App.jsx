@@ -6,6 +6,7 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
+import Footer from './components/Footer';
 import CreateListing from './pages/CreateListing';
 import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
@@ -28,6 +29,7 @@ const App = () => {
         </Route>
         <Route path='/listing/:listingId' element={<Listing/>}/>
       </Routes>
+      <Footer/>
     </Router>
   )
 }
